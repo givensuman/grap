@@ -47,25 +47,20 @@ char *substring(char *string, int start, int end) {
  * Prints a prettified version of the line
  * to stdout with provided line number
  */
-#define BOLD "\e[1m"
-#define UNBOLD "\e[m"
-#define COLOR "\x1b[36m"
-#define UNCOLOR "\x1b[0m"
-#define HIGHLIGHT "\x1b[33m"
-void present_substring(int line_number, char *string, int start, int end) {
-  int length = length_of(string);
+#define FORMAT "\033[1;31m"
+#define UNFORMAT "\033[0m"
 
+void print_result(char *string, int start, int end) {
   char *head = substring(string, 0, start);
-  char *target = substring(string, start, end);
-  char *tail = substring(string, end, length);
+  char *result = substring(string, start, end);
+  char *tail = substring(string, end, length_of(string));
 
-  printf("%sLine %d:%s ", HIGHLIGHT, line_number, UNCOLOR);
   printf("%s", head);
-  printf("%s%s%s%s%s", BOLD, COLOR, target, UNBOLD, UNCOLOR);
+  printf("%s%s%s", FORMAT, result, UNFORMAT);
   printf("%s", tail);
 
   free(head);
-  free(target);
+  free(result);
   free(tail);
 }
 
@@ -90,8 +85,6 @@ int main(int argc, char **argv) {
   char *buf = malloc(255 * sizeof(char));
   char *line = fgets(buf, 255, file);
   int length_of_needle = length_of(needle);
-  int line_count = 1;
-  int number_of_hits = 0;
 
   while (line != NULL) {
     int length_of_line = length_of(line);
@@ -100,25 +93,16 @@ int main(int argc, char **argv) {
       char *substr = substring(line, i, i + length_of_needle);
 
       if (strcmp(substr, needle) == 0) {
-        present_substring(line_count, line, i, i + length_of_needle);
-        number_of_hits++;
+        print_result(line, i, i + length_of_needle);
       }
 
       free(substr);
     }
 
     line = fgets(buf, 255, file);
-    line_count++;
   }
 
-  if (number_of_hits > 0) {
-    printf("\nFound %d instance%s of %s%s%s in %s%s%s\n", number_of_hits,
-           number_of_hits == 1 ? "" : "s", COLOR, needle, UNCOLOR, HIGHLIGHT,
-           haystack, UNCOLOR);
-  } else {
-    printf("\nCouldn't find any instances of %s%s%s%s%s in %s%s%s\n", COLOR,
-           BOLD, needle, UNCOLOR, UNBOLD, HIGHLIGHT, haystack, UNCOLOR);
-  }
+  printf("\n");
 
   free(buf);
   fclose(file);
