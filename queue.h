@@ -1,5 +1,10 @@
+// Standard queue data structure
+// for storing chars
+
 #ifndef QUEUE_H_
 #define QUEUE_H_
+
+#include <stdbool.h>
 
 typedef struct node {
   char value;
@@ -7,20 +12,25 @@ typedef struct node {
 } Node;
 
 typedef struct queue {
-  Node front;
-  Node rear;
+  Node *front;
+  Node *rear;
 } Queue;
 
 /**
  * Add a node to the end of the queue
  */
-Queue *enqueue(Queue *queue, Node *node);
+Queue *enqueue(Queue *queue, char value);
 
 /**
- * Remove and return the node at
- * the front of the queue
+ * Remove and return the node at the
+ * front of the queue
  */
 Node *dequeue(Queue *queue);
+
+/**
+ * Return if the queue is empty
+ */
+bool is_empty(Queue *queue);
 
 /**
  * Print the contents of the queue
