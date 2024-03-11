@@ -4,6 +4,16 @@
 #include <stdlib.h>
 #include <string.h>
 
+void print_substring(char *line, char *target, int index_of_target) {
+  for (int i = 0; i < index_of_target; i++) {
+    printf("%c", line[i]);
+  }
+  printf("\033[1;31m%s\033[0m", target);
+  for (int i = index_of_target + strlen(target); i < strlen(line); i++) {
+    printf("%c", line[i]);
+  }
+}
+
 void cycle_over_line(char *line, char *target) {
   if (line == NULL || line[0] == '\n')
     return;
@@ -19,7 +29,7 @@ void cycle_over_line(char *line, char *target) {
   for (int i = target_length; i < line_length; i++) {
     cycle(queue, line[i]);
     if (matches_string(queue, target))
-      printf("Found match for %s!\n", target);
+      print_substring(line, target, (i - target_length) + 1);
   }
 
   destroy_queue(queue);
