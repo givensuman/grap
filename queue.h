@@ -14,6 +14,7 @@ typedef struct node {
 typedef struct queue {
   Node *front;
   Node *rear;
+  int size;
 } Queue;
 
 /**
@@ -26,6 +27,12 @@ Queue *enqueue(Queue *queue, char value);
  * front of the queue
  */
 Node *dequeue(Queue *queue);
+
+/**
+ * Remove and free the node at the
+ * front of the queue
+ */
+void dequeue_and_free(Queue *queue);
 
 /**
  * Return if the queue is empty
@@ -43,5 +50,11 @@ void print_queue(Queue *queue);
  * the queue and resets its front and rear
  */
 void free_queue(Queue *queue);
+
+/**
+ * Free the memory associated with
+ * the queue, and the queue itself
+ */
+void destroy_queue(Queue *queue);
 
 #endif // QUEUE_H_

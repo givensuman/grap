@@ -10,14 +10,15 @@ Queue *enqueue(Queue *queue, char value) {
   if (is_empty(queue)) {
     queue->front = node;
     queue->rear = node;
+    queue->size++;
 
     return queue;
   }
 
-  Node *front = queue->front;
-  node->next = front;
-  queue->front = node;
+  queue->rear->next = node;
+  queue->rear = node;
 
+  queue->size++;
   return queue;
 }
 
@@ -30,10 +31,16 @@ Node *dequeue(Queue *queue) {
   Node *front = queue->front;
   queue->front = front->next;
 
+  queue->size--;
   return front;
 }
 
-bool is_empty(Queue *queue) { return queue->front == NULL; }
+void dequeue_and_free(Queue *queue) {
+  Node *node = dequeue(queue);
+  free(node);
+}
+
+bool is_empty(Queue *queue) { return queue->size == 0; }
 
 void print_queue(Queue *queue) {
   printf("[");
@@ -54,6 +61,7 @@ void free_queue(Queue *queue) {
 
   queue->front = NULL;
   queue->rear = NULL;
+  queue->size = 0;
 }
 
 void destroy_queue(Queue *queue) {

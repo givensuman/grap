@@ -11,7 +11,7 @@
  * Cycle the queue, adding a new char
  * and pushing out the oldest
  */
-Queue *cycle(Queue *queue, char value);
+void cycle(Queue *queue, char value);
 
 /**
  * Determine if the provided queue of

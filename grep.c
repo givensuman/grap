@@ -1,6 +1,29 @@
+#include "cycle.h"
+#include "queue.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+
+void cycle_over_line(char *line, char *target) {
+  if (line == NULL || line[0] == '\n')
+    return;
+
+  size_t line_length = strlen(line);
+  size_t target_length = strlen(target);
+
+  Queue *queue = malloc(sizeof(Queue));
+
+  for (int i = 0; i < target_length; i++) {
+    enqueue(queue, line[i]);
+  }
+  for (int i = target_length; i < line_length; i++) {
+    cycle(queue, line[i]);
+    if (matches_string(queue, target))
+      printf("Found match for %s!\n", target);
+  }
+
+  destroy_queue(queue);
+}
 
 int main(int argc, char **argv) {
   char *line = NULL;
@@ -14,10 +37,7 @@ int main(int argc, char **argv) {
   }
 
   while ((read = getline(&line, &line_length, file)) != -1) {
-    printf("%s\n", line);
-    for (int i = 0; i < line_length; i++) {
-      //
-    }
+    cycle_over_line(line, argv[1]);
   }
 
   fclose(file);
