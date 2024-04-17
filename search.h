@@ -66,9 +66,9 @@ int *kmp_search(char *target, char *space);
  * Helper method for finding an optimized position
  * to fall back to in the event of a mismatch.
  *
- * @param char *target
+ * @param char *pattern
  *
- * @return int *failure_states
+ * @return int *failure
  */
 int *failure_function(char *target);
 
