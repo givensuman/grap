@@ -1,32 +1,30 @@
-/**
- * Pseudocode for failure function
- *
- * https://brown-cs181-fall22.github.io/lectures/FailureFunctionAlgorithm.pdf
- *
- * i <- 0
- * f(1) <- 0
- *
- * for every j from 2 to m do
- *   i = f(j - 1)
- *   while p(j) != p(i + 1) and i > 0 do
- *     i = f(i)
- *   if p(j) != p(i + 1) and i = 0 then
- *     f(j) = 0
- *   else
- *     f(j) = i + 1
- *  end
- *  return f
- *
- *  Helper function to determine the length of the
- *  longest string in our target that is also a
- *  prefix of the search string.
- *  Also sometimes referred to as the LSP function,
- *  or longest suffix/prefix.
- */
-int *failure_function(char *search_term) {
-  int length = strlen(search_term);
-  if (length == 0 || length == 1)
-    return 0;
+#include "search.h"
+#include <stdlib.h>
+#include <string.h>
 
-  for (int j = 2; j <=)
+int *kmp_search(char *target, char *space) {}
+
+// See pseudocode in search.h
+int *failure_function(char *p) {
+  unsigned target_length = strlen(p);
+
+  int *f = malloc(sizeof(int) * (target_length));
+
+  int i = 0;
+  f[0] = 0;
+
+  for (int j = 1; j < target_length; j++) {
+    i = f[j - 1];
+    while (p[j] != p[i + 1] && i > 0) {
+      i = f[i];
+    }
+
+    if (f[j] == f[i + 1] && i == 0) {
+      f[j] = 0;
+    } else {
+      f[j] = i + 1;
+    }
+  }
+
+  return f;
 }
