@@ -3,6 +3,16 @@
 #include <stdlib.h>
 #include <string.h>
 
+void print_substring(char *line, char *target, int index_of_target) {
+  for (int i = 0; i < index_of_target; i++) {
+    printf("%c", line[i]);
+  }
+  printf("\033[1;31m%s\033[0m", target);
+  for (int i = index_of_target + strlen(target); i < strlen(line); i++) {
+    printf("%c", line[i]);
+  }
+}
+
 int main(int argc, char **argv) {
   char *line = NULL;
   size_t line_length = 0;
@@ -24,7 +34,7 @@ int main(int argc, char **argv) {
   while ((read = getline(&line, &line_length, file)) != -1) {
     Node *match = kmp_search(target, line);
     while (match != NULL) {
-      printf("%s\n", line);
+      print_substring(line, target, match->data);
       match = match->next;
     }
   }
