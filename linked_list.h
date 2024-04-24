@@ -11,7 +11,7 @@ typedef struct node {
  *
  * @param Node *head
  */
-void print(Node *head);
+void print_list(Node *head);
 
 /**
  * Appends data to the end of the linked list

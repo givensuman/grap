@@ -1,6 +1,8 @@
 #ifndef SEARCH_H_
 #define SEARCH_H_
 
+#include "linked_list.h"
+
 /**
  * Pseudocode for Knuth-Morris-Pratt
  * pattern-search algorithm
@@ -39,7 +41,7 @@
  *
  * @return int *positions
  */
-int *kmp_search(char *target, char *space);
+Node *kmp_search(char *target, char *space);
 
 /**
  * Pseudocode for failure function
@@ -70,6 +72,6 @@ int *kmp_search(char *target, char *space);
  *
  * @return int *failure
  */
-int *failure_function(char *target);
+int *calculate_lps(char *target);
 
 #endif // SEARCH_H_
