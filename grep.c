@@ -44,19 +44,24 @@ void print_substring(char *line, char *target, int index_of_target) {
  */
 int main(int argc, char **argv) {
   char *line = NULL;
+  char *target = NULL;
+  FILE *file = NULL;
   size_t line_length = 0;
   ssize_t read;
 
-  if (argc != 3) {
+  if (argc == 3) {
+    target = argv[1];
+    file = fopen(argv[2], "r");
+
+    if (file == NULL) {
+      fprintf(stderr, "Could not read file %s\n", argv[2]);
+      exit(EXIT_FAILURE);
+    }
+  } else if (argc == 2) {
+    target = argv[1];
+    file = stdin;
+  } else {
     fprintf(stderr, "Usage: %s <target> <file/stream>\n", argv[0]);
-    exit(EXIT_FAILURE);
-  }
-
-  char *target = argv[1];
-
-  FILE *file = fopen(argv[2], "r");
-  if (file == NULL) {
-    fprintf(stderr, "Could not read file %s.\n", argv[2]);
     exit(EXIT_FAILURE);
   }
 
