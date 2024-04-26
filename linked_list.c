@@ -46,30 +46,3 @@ void free_list(Node *head) {
     temp = next;
   }
 }
-
-int *to_array(Node *head) {
-  printf("Converting this list to array: ");
-  print_list(head);
-
-  int size = 0;
-  Node *temp = head;
-  while (temp != NULL) {
-    size++;
-    temp = temp->next;
-  }
-
-  int *arr = malloc(sizeof(int) * size);
-  if (arr == NULL) {
-    printf("Memory allocation failed in to_array call.\n");
-    return NULL;
-  }
-
-  int i = 0;
-  temp = head;
-  while (i < size && temp != NULL) {
-    arr[i++] = temp->data;
-    temp = temp->next;
-  }
-
-  return arr;
-}

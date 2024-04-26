@@ -34,11 +34,4 @@ Node *prepend(Node *head, int data);
  */
 void free_list(Node *head);
 
-/**
- * Converts the linked list to an array
- *
- * @param Node *head
- */
-int *to_array(Node *head);
-
 #endif // LINKED_LIST_H_

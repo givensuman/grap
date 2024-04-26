@@ -3,33 +3,30 @@
 
 #include "linked_list.h"
 
+// Reference:
+// Introduction To Algorithms By Thomas H. Cormen, Charles E. Leiserson, Ronald
+// L. Rivest, Clifford Stein
+// Chapter 32: String Matching
+
 /**
  * Pseudocode for Knuth-Morris-Pratt
  * pattern-search algorithm
  *
- * https://brown-cs181-fall22.github.io/lectures/KMPAlgorithm.pdf
- *
- * calculate f(i) for 1 <= i <= p
- * construct a skeleton DFA M for P using f
- * M starts in state M[0]
- * i := current state in M (updated with transitions)
- * j <- 1
- *
- * while j <= t do
- *   if T[j] = P[i + 1] then
- *     j <- j + 1
- *     M enters state M[i + 1]
- *     if M is in state M[p] then
- *       record (j - p)
- *       M enters state M[f(p)]
- *     end
- *   else
- *    M enters state M[f(i)]
- *    if M is in state M[0] and T[j] != P[i + 1] then
- *      j <- j + 1
- *    end
- *   end
+ * KMP(T, P)
+ * n <- T.length
+ * m <- P.length
+ * k <- calculate_lps(P)
+ * q <- 0
+ * for i = 1 to n do
+ *  while q > 0 and P[q + 1] != T[i] do
+ *    q = k[q]
  *  end
+ *  if P[q + 1] == T[i] then
+ *    q = q + 1
+ *  if q == m then
+ *    print i - m
+ *    q = k[q]
+ * end
  */
 
 /**
@@ -44,29 +41,28 @@
 Node *kmp_search(char *target, char *space);
 
 /**
- * Pseudocode for failure function
+ * Pseudocode for prefix compute
  * used for input preprocess for KMP search
  *
- * https://brown-cs181-fall22.github.io/lectures/FailureFunctionAlgorithm.pdf
- *
- * i <- 0
- * f(1) <- 0
- *
- * for every j from 2 to m do
- *  i = f(j - 1)
- *  while p(j) != p(i + 1) and i > 0 do
- *    i = f(i)
- *  if p(j) != p(i + 1) and i = 0 then
- *    f(j) = 0
- *  else
- *    f(j) = i + 1
- *
- *  return f
+ * calculate_lps(P)
+ * m <- P.length
+ * let k[1..m] be a new array
+ * k[1] <- 0
+ * j <- 0
+ * for q = 2 to m do
+ *   while j > 0 and P[j + 1] != P[q] do
+ *     j <- k[j]
+ *   end
+ *   if P[j + 1] == P[q] then
+ *     j <- j + 1
+ *   k[q] = j
+ * end
+ * return k
  */
 
 /**
  * Helper method for finding an optimized position
- * to fall back to in the event of a mismatch.
+ * to fall back to in the event of a mismatch
  *
  * @param char *pattern
  *
