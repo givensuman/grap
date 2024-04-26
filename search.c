@@ -26,7 +26,7 @@ List *kmp_search(char *target, char *space) {
   List *matches = new_list();
 
   while (i < space_length) {
-    // The characters are a match
+    // the characters are a match
     if (target[j] == space[i]) {
       i++;
       j++;
