@@ -38,7 +38,7 @@
  *
  * @return int *positions
  */
-Node *kmp_search(char *target, char *space);
+List *kmp_search(char *target, char *space);
 
 /**
  * Pseudocode for prefix compute

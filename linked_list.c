@@ -2,47 +2,81 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-void print_list(Node *head) {
-  Node *temp = head;
-  while (temp != NULL) {
-    printf("%d%s", temp->data, temp->next == NULL ? "" : " -> ");
-    temp = temp->next;
+List *new_list() {
+  List *list = malloc(sizeof(List));
+  list->head = NULL;
+  list->tail = NULL;
+
+  return list;
+}
+
+void print_list(List *list) {
+  if (list == NULL || list->head == NULL) {
+    printf("List is empty.\n");
+    return;
+  }
+
+  Node *node = list->head;
+  while (node <= list->tail) {
+    printf("%d%s", node->data, node->next == NULL ? "" : " -> ");
+    node = node->next;
   }
   printf("\n");
 }
 
-Node *append(Node *head, int data) {
-  Node *new_node = malloc(sizeof(Node));
-  new_node->data = data;
-  new_node->next = NULL;
+List *append(List *list, int data) {
+  Node *node = malloc(sizeof(Node));
+  node->data = data;
+  node->next = NULL;
 
-  if (head == NULL) {
-    return new_node;
+  if (list == NULL || list->tail == NULL) {
+    list->head = node;
+    list->tail = node;
+    return list;
   }
 
-  Node *temp = head;
-  while (temp->next != NULL) {
-    temp = temp->next;
-  }
-  temp->next = new_node;
+  list->tail->next = node;
+  list->tail = node;
 
-  return head;
+  return list;
 }
 
-Node *prepend(Node *head, int data) {
-  Node *new_node = malloc(sizeof(Node));
-  new_node->data = data;
-  new_node->next = head;
-  head = new_node;
+List *prepend(List *list, int data) {
+  Node *node = malloc(sizeof(Node));
+  node->data = data;
 
-  return head;
+  if (list == NULL || list->head == NULL) {
+    list->head = node;
+    list->tail = node;
+    node->next = NULL;
+
+    return list;
+  }
+
+  node->next = list->head;
+  list->head = node;
+
+  return list;
 }
 
-void free_list(Node *head) {
-  Node *temp = head;
-  while (temp != NULL) {
-    Node *next = temp->next;
-    free(temp);
-    temp = next;
+// void traverse_list(List *list, void (*func)(int)) {
+//   Node *node = list->head;
+//   while (node != NULL) {
+//     func(node->data);
+//     node = node->next;
+//   }
+// }
+
+void free_list(List *list) {
+  Node *node = list->head;
+  while (node != NULL) {
+    Node *next = node->next;
+    free(node);
+    node = next;
   }
+}
+
+void destroy_list(List *list) {
+  free_list(list);
+  free(list);
 }

@@ -1,6 +1,5 @@
 #include "search.h"
 #include "linked_list.h"
-#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
@@ -15,16 +14,16 @@
  * @param char *target
  * @param char *space
  *
- * @returns Node *success
+ * @returns list *matches
  */
-Node *kmp_search(char *target, char *space) {
+List *kmp_search(char *target, char *space) {
   unsigned target_length = strlen(target);
   unsigned space_length = strlen(space);
   int i = 0;
   int j = 0;
 
   int *lps = calculate_lps(target);
-  Node *matches = NULL;
+  List *matches = new_list();
 
   while (i < space_length) {
     // The characters are a match

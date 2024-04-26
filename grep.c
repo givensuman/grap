@@ -61,10 +61,11 @@ int main(int argc, char **argv) {
   }
 
   while ((read = getline(&line, &line_length, file)) != -1) {
-    Node *match = kmp_search(target, line);
-    while (match != NULL) {
-      print_substring(line, target, match->data);
-      match = match->next;
+    List *matches = kmp_search(target, line);
+    Node *node = matches->head;
+    while (node != NULL) {
+      print_substring(line, target, node->data);
+      node = node->next;
     }
   }
 
