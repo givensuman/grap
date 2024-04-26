@@ -10,7 +10,7 @@ LINUX_GREP=grep
 TEST_FILE=frankenstein.txt
 
 # Test pattern
-PATTERN="science"
+PATTERN="monster"
 
 # Number of iterations
 ITERATIONS=100
@@ -32,7 +32,7 @@ run_grep_and_average_time() {
     echo "Average execution time: $average_time seconds"
 }
 
-echo "Testing your grep program..."
+echo "Testing sus grep..."
 run_grep_and_average_time "$MY_GREP $PATTERN $TEST_FILE"
 
 echo "Testing Linux grep..."
