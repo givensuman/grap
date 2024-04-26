@@ -1,3 +1,4 @@
+#include "linked_list.h"
 #include "search.h"
 #include <stdio.h>
 #include <stdlib.h>
@@ -72,6 +73,8 @@ int main(int argc, char **argv) {
       print_substring(line, target, node->data);
       node = node->next;
     }
+
+    destroy_list(matches);
   }
 
   fclose(file);
