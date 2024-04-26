@@ -62,25 +62,21 @@ List *kmp_search(char *target, char *space) {
  */
 int *calculate_lps(char *pattern) {
   unsigned pattern_length = strlen(pattern);
-
-  // Allocate memory for the failure function array
   int *lps = malloc(sizeof(int) * (pattern_length));
+  int position = 0;
+  lps[0] = 0;
 
-  // Initialize variables
-  int position = 0; // Position in the pattern
-  lps[0] = 0;       // Failure function value for the first character
-
-  // Iterate over the characters of the pattern to calculate failure function
-  // values
+  // iterate through the pattern
   for (int current_char = 1; current_char < pattern_length; current_char++) {
-    position = lps[current_char - 1]; // Get the previous position
+    position = lps[current_char - 1];
 
-    // Update position until we find a match or reach the start of the pattern
+    // if the characters don't match, keep going back
+    // to find the "longest prefix" fallback
     while (pattern[current_char] != pattern[position] && position > 0) {
       position = lps[position - 1];
     }
 
-    // Calculate failure function value for the current character
+    // if the characters do match, move forward
     if (pattern[current_char] == pattern[position]) {
       lps[current_char] = position + 1;
     } else {
