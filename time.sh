@@ -1,9 +1,6 @@
 #!/bin/bash
 
-# Your grep program
 MY_GREP=./grep
-
-# Linux built-in grep
 LINUX_GREP=grep
 
 # Test file
