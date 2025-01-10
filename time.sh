@@ -1,6 +1,6 @@
 #!/bin/bash
 
-MY_GREP=./grep
+MY_GREP=./clang/grep
 LINUX_GREP=grep
 
 # Test file
@@ -14,19 +14,19 @@ ITERATIONS=100
 
 # Function to run grep and calculate average time
 run_grep_and_average_time() {
-    local grep_command="$1"
+  local grep_command="$1"
 
-    total_time=0
-    for ((i = 1; i <= ITERATIONS; i++)); do
-        start_time=$(date +%s.%N)
-        eval "$grep_command" > /dev/null
-        end_time=$(date +%s.%N)
-        execution_time=$(echo "$end_time - $start_time" | bc)
-        total_time=$(echo "$total_time + $execution_time" | bc)
-    done
+  total_time=0
+  for ((i = 1; i <= ITERATIONS; i++)); do
+    start_time=$(date +%s.%N)
+    eval "$grep_command" >/dev/null
+    end_time=$(date +%s.%N)
+    execution_time=$(echo "$end_time - $start_time" | bc)
+    total_time=$(echo "$total_time + $execution_time" | bc)
+  done
 
-    average_time=$(echo "scale=4; $total_time / $ITERATIONS" | bc)
-    echo "Average execution time: $average_time seconds"
+  average_time=$(echo "scale=4; $total_time / $ITERATIONS" | bc)
+  echo "Average execution time: $average_time seconds"
 }
 
 echo "Testing sus grep..."
